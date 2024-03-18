@@ -16,27 +16,68 @@ const RegisterPage:React.FC = () =>{
         password:'',
         fullName:'',
         year:''
-    })
+    });
 
-    const [reenterPassword, setReenterPassword] = useState<string>('')
+    const [reenterPassword, setReenterPassword] = useState<string>('');
 
 
     const handleUpdate = (e:React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>)=>{
         setRegisterForm((prev)=>{
-            return {...prev,[e.target.name]:e.target.value}
+            return {...prev,[e.target.name]:e.target.value};
         })
     }
+
+    const passwordVerification = ():boolean=>{
+        if(!(reenterPassword === registerForm.password)){
+            alert('Please re-enter password');
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    const formVerification = ():boolean=>{
+        for(const [key,value] of Object.entries(registerForm)){
+            if(value === ''){
+                switch(key){
+                    case 'username':
+                        alert('Please enter your username');
+                        return false;
+                        break;
+                    case 'password':
+                        alert('Please enter your password');
+                        return false;
+                        break;
+                    case 'fullName':
+                        alert('Please enter you full name');
+                        return false;
+                        break;
+                    case 'year':
+                        alert('Please enter your current school year');
+                        return false;
+                        break;
+                }
+            }
+        }
+
+        return true
+    }
+
+    console.log(reenterPassword)
 
     const handleSubmit = async ()=>{
-        await axios.post('http://localhost:3000/register',registerForm)
-        .then((response)=>{
-            console.log(response)
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
+        if(passwordVerification() && formVerification()){
+            await axios.post('http://localhost:3000/register',registerForm)
+            .then((response)=>{
+                console.log(response)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
     }
 
+    
     
 
     return(
@@ -57,7 +98,7 @@ const RegisterPage:React.FC = () =>{
                 </div>
 
                 <div className="register_reenter_password">
-                    <input onChange={handleUpdate} type='password' name='reEnterPassword' placeholder='Re-enter Password'></input>
+                    <input onChange={(e)=>setReenterPassword(e.target.value)} type='password' name='reEnterPassword' placeholder='Re-enter Password'></input>
                 </div>
 
                 <div className="register_fullName">
@@ -75,7 +116,7 @@ const RegisterPage:React.FC = () =>{
                 </div>
 
                 <div className="register_submit">
-                    <button>Continue</button>
+                    <button onClick={handleSubmit}>Continue</button>
                 </div>
 
             </div>

@@ -1,6 +1,7 @@
 import '../styles/loginPage.css'
 import { ReactHTMLElement, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 interface ILoginForm{
     username:string,
@@ -54,7 +55,7 @@ const LoginPage:React.FC = ()=>{
                 </div>
 
                 <div className="login_register">
-                    <a>Forgot Password?</a>
+                    <Link to={'/register'} >Do not have an account?</Link>
                 </div>
 
             </div>

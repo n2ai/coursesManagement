@@ -2,6 +2,8 @@ const cors = require('cors')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const loginRouters = require('./routers/loginRouters')
+const registerRouters = require('./routers/registerRouters')
 const app = express()
 require('dotenv').config()
 const corsOptions = {
@@ -15,10 +17,11 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cors(corsOptions))
 
-app.post('/',(req,res)=>{
-    console.log(req.body)
-    res.send('Receive')
-})
+//Routing for /
+app.use('/',loginRouters)
+
+//Routing for /register
+app.use('/register',registerRouters)
 
 app.listen(3000,()=>{
     console.log(`Server is listening at port 3000`)

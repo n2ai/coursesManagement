@@ -1,2 +1,5 @@
-const app = require('express').Router()
-app.post('/',()=>{})
+const router = require('express').Router()
+const loginControllers = require('../controllers/loginControllers')
+router.post('/',loginControllers.login)
+
+module.exports = router
