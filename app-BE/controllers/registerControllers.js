@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const e = require('express');
 const salt = 10;
 const mysql = require('mysql2/promise');
 
@@ -23,17 +24,19 @@ const registerRouters = {
             //Work on registering
             const {username,password,fullName,year } = req.body;
             const [row,fields] = await pool.query('SELECT username FROM Users WHERE username = ?',[username])
-            console.log(row)
-
-            //Finished to check available username
-            
-            bcrypt.hash(password,10,(err,hash)=>{
-            //hash is the hased password
-            //err is error that happen during the process 
-            });
-            
+            if(row.length === 0){
+                bcrypt.hash(password,10,async (err,hash)=>{
+                    //hash is the hased password
+                    //err is error that happen during the process 
+                    const [row,fields] = await pool.query('INSERT INTO Users (username,password,fullname,year_of_college) VALUES (?,?,?,?)',
+                    [username,hash,fullName,year]);
+                });
+                res.status(200).send('Success')
+            }else{
+                res.status(500).send('Please choose another username');
+            }
         }catch(err){
-            console.log(err);
+            res.status(500).send(err)
         }
         
     }

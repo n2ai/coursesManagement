@@ -1,6 +1,8 @@
 import '../styles/registerPage.css'
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import RegisterModal from '../components/RegisterModal'
 
 interface IRegisterPage{
     username:string,
@@ -10,6 +12,8 @@ interface IRegisterPage{
 }
 
 const RegisterPage:React.FC = () =>{
+
+    const [modal,setModal] = useState<boolean>(false)
 
     const[registerForm, setRegisterForm] = useState<IRegisterPage>({
         username:'',
@@ -63,16 +67,18 @@ const RegisterPage:React.FC = () =>{
         return true
     }
 
-    console.log(reenterPassword)
+    console.log(modal)
 
-    const handleSubmit = async ()=>{
+    const handleSubmit = ()=>{
         if(passwordVerification() && formVerification()){
-            await axios.post('http://localhost:3000/register',registerForm)
-            .then((response)=>{
-                console.log(response)
+            axios.post('http://localhost:3000/register',registerForm)
+            .then((res)=>{
+                console.log(res)
+                setModal(true)
             })
+            
             .catch((err)=>{
-                console.log(err)
+                alert('There already a user, please change your username')
             })
         }
     }
@@ -82,7 +88,7 @@ const RegisterPage:React.FC = () =>{
 
     return(
         <div className="register_page">
-
+            {modal && <RegisterModal/>}
             <div className='register_form'>
 
                 <div className="register_header">
