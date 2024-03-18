@@ -16,11 +16,21 @@ const LoginPage:React.FC = ()=>{
     
     const updateForm = (e:React.ChangeEvent<HTMLInputElement>):void=>{
         setLoginForm(prev=>{
-            return {[e.target.name]:e.target.value,...prev}
+            return {...prev,[e.target.name]:e.target.value}
         })
     }
 
-    
+    const handleSubmit = async ()=>{
+        await axios.post('http://localhost:3000',loginForm)
+        .then((response)=>{
+            console.log(response)
+        })
+        .catch((err:Error)=>{
+            console.log(err)
+        })
+    }
+
+    console.log(loginForm)
 
     return(
         <div className="login_page">
@@ -40,7 +50,7 @@ const LoginPage:React.FC = ()=>{
                 </div>
 
                 <div className="login_submit">
-                    <button>Continue</button>
+                    <button onClick={handleSubmit}>Continue</button>
                 </div>
 
                 <div className="login_register">
