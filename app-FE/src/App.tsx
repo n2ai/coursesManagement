@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import { createBrowserRouter, RouterProvider,Route,createRoutesFromElements } from 'react-router-dom'
 import './App.css'
+import { CookiesProvider } from 'react-cookie'
 
 function App() {
   
@@ -16,7 +17,10 @@ function App() {
   )
 
   return (
-    <RouterProvider router={router}></RouterProvider>
+    <CookiesProvider defaultSetOptions={{path:'/'}}>
+      <RouterProvider router={router}>
+      </RouterProvider>
+    </CookiesProvider>
   )
 }
 
