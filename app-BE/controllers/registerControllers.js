@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const e = require('express');
-const salt = 10;
+require('dotenv').config()
+const SALT = parseInt(process.env.BCRYPT_SALT)
 const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
@@ -25,7 +26,7 @@ const registerRouters = {
             const {username,password,fullName,year } = req.body;
             const [row,fields] = await pool.query('SELECT username FROM Users WHERE username = ?',[username])
             if(row.length === 0){
-                bcrypt.hash(password,10,async (err,hash)=>{
+                bcrypt.hash(password,SALT,async (err,hash)=>{
                     //hash is the hased password
                     //err is error that happen during the process 
                     const [row,fields] = await pool.query('INSERT INTO Users (username,password,fullname,year_of_college) VALUES (?,?,?,?)',

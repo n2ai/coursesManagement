@@ -6,6 +6,7 @@ const loginRouters = require('./routers/loginRouters')
 const registerRouters = require('./routers/registerRouters')
 const app = express()
 require('dotenv').config()
+const PORT = process.env.PORT
 const corsOptions = {
     origin:['http://localhost:5173'],
     credentials:true,
@@ -23,6 +24,6 @@ app.use('/',loginRouters)
 //Routing for /register
 app.use('/register',registerRouters)
 
-app.listen(3000,()=>{
-    console.log(`Server is listening at port 3000`)
+app.listen(PORT,()=>{
+    console.log(`Server is listening at port ${3000}`)
 })

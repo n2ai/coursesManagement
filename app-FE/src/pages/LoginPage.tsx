@@ -32,8 +32,6 @@ const LoginPage:React.FC = ()=>{
         })
     }
 
-    console.log(loginForm)
-
     return(
         <div className="login_page">
 
