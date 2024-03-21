@@ -12,7 +12,7 @@
     height: 500px;
     border-radius: 25px;
     background-color: white;
-    border:2px solid #2ac3f4;
+    border: 2px solid black
 }
 
 .login_header, .login_username, .login_password, .login_submit{
@@ -21,6 +21,7 @@
 
 .login_header{
     text-align: center;
+    padding-top: 15px;
 }
 
 .login_username,.login_password{
@@ -38,7 +39,7 @@
     height: 2.5rem;
     border-radius: 5px;
     border: 2px;
-    border:2px solid #2ac3f4;
+    border:2px solid black;
 }
 
 .login_submit{
@@ -53,7 +54,7 @@
 .login_submit > button{
     cursor: pointer;
     background-color: transparent;
-    border:2px solid #2ac3f4;
+    border:2px solid black;
     width: 150px;
     height: 50px;
 }

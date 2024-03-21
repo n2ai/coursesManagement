@@ -36,6 +36,7 @@ const loginControllers = {
             }else{
                 let payload = {
                     username:username,
+                    id:userId,
                     expiresIn: process.env.JWT_EXPIRES_IN
                 }
 

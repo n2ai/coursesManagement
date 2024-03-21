@@ -18,7 +18,7 @@ const pool = mysql.createPool({
     keepAliveInitialDelay:0
 });
 
-const registerRouters = {
+const registerControllers = {
 
     registering:async (req,res)=>{
         try{
@@ -43,4 +43,4 @@ const registerRouters = {
     }
 }
 
-module.exports = registerRouters
+module.exports = registerControllers
