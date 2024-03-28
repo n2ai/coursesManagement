@@ -34,8 +34,8 @@ const LoginPage:React.FC = ()=>{
             setCookie('token',accessToken)
             navigate(`/profile/?id=${id}`)
         })
-        .catch((err:Error)=>{
-            console.log(err)
+        .catch(()=>{
+           navigate('/')
         })
     }
 

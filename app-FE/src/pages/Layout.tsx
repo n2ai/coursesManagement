@@ -2,7 +2,8 @@ import { Outlet } from "react-router-dom"
 import { useEffect } from "react"
 import axios from "axios"
 import { useSearchParams } from "react-router-dom"
-const HomePage:React.FC = ()=>{
+import NavigationBar from "../components/NavigationBar"
+const Layout:React.FC = ()=>{
 
     const [searchParams,setSearchParams] = useSearchParams();
     const id = searchParams.get('id')
@@ -18,23 +19,14 @@ const HomePage:React.FC = ()=>{
     },[])
 
     return(
-        <>
-            <header>
+        <div>
+            <NavigationBar/>
+            
+            <Outlet>
 
-            </header>
-
-            <main>
-                <p>This is homepage</p>
-                <Outlet>
-
-                </Outlet>
-            </main>
-
-            <footer>
-
-            </footer>
-        </>
+            </Outlet>
+        </div>
     )
 }
 
-export default HomePage
+export default Layout;

@@ -24,12 +24,12 @@ const registerControllers = {
         try{
             //Work on registering
             const {username,password,fullName,year } = req.body;
-            const [row,fields] = await pool.query('SELECT username FROM Users WHERE username = ?',[username])
+            const [row,fields] = await pool.query('SELECT UserName FROM Users WHERE UserName = ?',[username])
             if(row.length === 0){
                 bcrypt.hash(password,SALT,async (err,hash)=>{
                     //hash is the hased password
                     //err is error that happen during the process 
-                    const [row,fields] = await pool.query('INSERT INTO Users (username,password,fullname,year_of_college) VALUES (?,?,?,?)',
+                    const [row,fields] = await pool.query('INSERT INTO Users (UserName,Password,FullName,year_of_college) VALUES (?,?,?,?)',
                     [username,hash,fullName,year]);
                 });
                 res.status(200).send('Success')

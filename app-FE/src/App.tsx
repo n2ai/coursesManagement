@@ -1,10 +1,9 @@
-import { useState } from 'react'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import { createBrowserRouter, RouterProvider,Route,createRoutesFromElements, Routes } from 'react-router-dom'
-import './App.css'
-import { CookiesProvider } from 'react-cookie'
-import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import { createBrowserRouter, RouterProvider,Route,createRoutesFromElements } from 'react-router-dom';
+import './App.css';
+import { CookiesProvider } from 'react-cookie';
+import Layout from './pages/Layout';
 
 function App() {
   
@@ -13,7 +12,7 @@ function App() {
       <Route path='/'>
         <Route index element={<LoginPage/>} ></Route>
         <Route path='/register' element={<RegisterPage/>}></Route>
-        <Route path='/profile' element={<HomePage/>}>
+        <Route path='/profile' element={<Layout/>}>
           
         </Route>
       </Route>

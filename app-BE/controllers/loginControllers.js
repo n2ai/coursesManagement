@@ -22,12 +22,12 @@ const loginControllers = {
         try{
             const {username,password} = req.body;
             console.log(req.body);
-            const [row,fields] = await pool.query(`SELECT password,userId FROM Users WHERE username = ?`,[username]);
+            const [row,fields] = await pool.query(`SELECT Password,UserId FROM Users WHERE username = ?`,[username]);
             if(row.length === 0) throw("No user exist");
             
             //verify password
-            let hashedPassword = row[0].password;
-            let userId = row[0].userId;
+            let hashedPassword = row[0].Password;
+            let userId = row[0].UserId;
             
             let verification = await bcrypt.compare(password,hashedPassword)
 
