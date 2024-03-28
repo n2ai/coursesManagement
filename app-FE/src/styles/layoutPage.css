@@ -1,0 +1,13 @@
+@media only screen and (min-width: 768px){
+   .layout-main{
+        display: flex;
+   }
+
+   .layout-navBar{
+        width: 30%;
+   }
+
+   .layout-content{
+        width: 70%;
+   }
+}

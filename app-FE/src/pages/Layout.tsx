@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import axios from "axios"
 import { useSearchParams } from "react-router-dom"
 import NavigationBar from "../components/NavigationBar"
+import '../styles/layoutPage.css'
 const Layout:React.FC = ()=>{
 
     const [searchParams,setSearchParams] = useSearchParams();
@@ -19,12 +20,15 @@ const Layout:React.FC = ()=>{
     },[])
 
     return(
-        <div>
-            <NavigationBar/>
-            
-            <Outlet>
+        <div className="layout-main">
+            <div className="layout-navBar">
+                <NavigationBar/>
+            </div>
 
-            </Outlet>
+            <div className="layout-contents">
+                This is content
+                <Outlet/>
+            </div>
         </div>
     )
 }
