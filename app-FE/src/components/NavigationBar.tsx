@@ -12,11 +12,15 @@ const NavigationBar:React.FC = ()=>{
     }
     
     const currentUrl = window.location.href;
-    console.log(currentUrl);
+    const urlArray = currentUrl.split('/')
+    console.log(urlArray)
 
     return(
         <div className="navBar-main">
             <div className="navBar">
+                <div className="navBar-media">
+
+                </div>
                 <Link className="navBar-link" to=''>Home</Link>
                 <Link className="navBar-link" to=''>Home</Link>
                 <Link className="navBar-link" to=''>Home</Link>
