@@ -15,12 +15,14 @@ const NavigationBar:React.FC = ()=>{
     
     
     const currentUrl = window.location.href;
-    const urlArray = currentUrl.split('/')
+    const urlArray = currentUrl.split('/');
     const generateUrl = (item:string):string=>{
-        return `${urlArray[0]}//${urlArray[2]}/${urlArray[3]}/${item}/${urlArray[4]}`
+        return `${urlArray[0]}//${urlArray[2]}/${urlArray[3]}/${item}/${urlArray[4]}`;
     }
 
-    console.log(generateUrl('addClass'))
+    const homeUrl = generateUrl('');
+    const addClassUrl = generateUrl('addClass');
+    
 
     return(
         <div className="navBar-main">
@@ -28,17 +30,14 @@ const NavigationBar:React.FC = ()=>{
                 <div className="navBar-media">
 
                 </div>
-                <Link className="navBar-link" to=''>Home</Link>
-                <Link className="navBar-link" to=''>Home</Link>
-                <Link className="navBar-link" to=''>Home</Link>
-                <Link className="navBar-link" to=''>Home</Link>
+                <Link className="navBar-link" to={'/'}>Home</Link>
+                <Link className="navBar-link" to={addClassUrl}>Add Class</Link>
                 <Icon onClick={handleClick} className="navBar-hamburger" icon="ci:hamburger-md" width="2.5rem" height="2.5rem" />
             </div>
             { openNavBar && <div className="navBar-extended">
                 <Link className="navBar-extended-link" to=''>Home</Link>
                 <Link className="navBar-extended-link" to=''>Home</Link>
-                <Link className="navBar-extended-link" to=''>Home</Link>
-                <Link className="navBar-extended-link" to=''>Home</Link>
+                
             </div>}
         </div>
         
