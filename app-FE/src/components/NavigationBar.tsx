@@ -10,10 +10,17 @@ const NavigationBar:React.FC = ()=>{
     const handleClick = ()=>{
         setOpenNavBar(prev=>!prev)
     }
+
+    //URL modification function split,add / to 1st elment, and join with the new link
+    
     
     const currentUrl = window.location.href;
     const urlArray = currentUrl.split('/')
-    console.log(urlArray)
+    const generateUrl = (item:string):string=>{
+        return `${urlArray[0]}//${urlArray[2]}/${urlArray[3]}/${item}/${urlArray[4]}`
+    }
+
+    console.log(generateUrl('addClass'))
 
     return(
         <div className="navBar-main">
