@@ -25,8 +25,8 @@ const NavigationBar:React.FC = ()=>{
                 <Icon onClick={handleClick} className="navBar-hamburger" icon="ci:hamburger-md" width="2.5rem" height="2.5rem" />
             </div>
             { openNavBar && <div className="navBar-extended">
-                <Link className="navBar-extended-link" to=''>Home</Link>
-                <Link className="navBar-extended-link" to=''>Home</Link>
+                <Link className="navBar-extended-link" to={`/profile/?id=${id}`}>Home</Link>
+                <Link className="navBar-extended-link" to={`/profile/addClass/?id=${id}`}>Add Class</Link>
                 
             </div>}
         </div>
