@@ -7,18 +7,12 @@ import '../styles/navigationBar.css'
 const NavigationBar:React.FC = ()=>{
     
     const [openNavBar,setOpenNavBar] = useState<boolean>(false)
-
+    const [searchParams,setSearchParams] = useSearchParams()
+    const id = searchParams.get('id')
+    console.log(id)
     const handleClick = ()=>{
         setOpenNavBar(prev=>!prev)
-    }
-
-    const [searchParams, setSearchParams] = useSearchParams()
-    
-    const rawUrl = window.location.href.split('?')[0];
-    const homeUrl = rawUrl+`?id=${searchParams.get('id')}`
-    const addClassUrl = rawUrl
-    
-    
+    }    
 
     return(
         <div className="navBar-main">
@@ -26,8 +20,8 @@ const NavigationBar:React.FC = ()=>{
                 <div className="navBar-media">
 
                 </div>
-                <Link className="navBar-link" to={homeUrl}>Home</Link>
-                <Link className="navBar-link" to={'/'}>Add Class</Link>
+                <Link className="navBar-link" to={`/profile/?id=${id}`}>Home</Link>
+                <Link className="navBar-link" to={`/profile/addClass/?id=${id}`}>Add Class</Link>
                 <Icon onClick={handleClick} className="navBar-hamburger" icon="ci:hamburger-md" width="2.5rem" height="2.5rem" />
             </div>
             { openNavBar && <div className="navBar-extended">

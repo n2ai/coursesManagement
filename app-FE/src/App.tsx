@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider,Route,createRoutesFromElements } fr
 import './App.css';
 import { CookiesProvider } from 'react-cookie';
 import Layout from './pages/Layout';
+import HomePage from './pages/HomePage';
+import AddClassPage from './pages/AddClassPage';
 
 function App() {
   
@@ -13,7 +15,8 @@ function App() {
         <Route index element={<LoginPage/>} ></Route>
         <Route path='/register' element={<RegisterPage/>}></Route>
         <Route path='/profile' element={<Layout/>}>
-          
+          <Route index element={<HomePage/>}></Route>
+          <Route path='/profile/addClass' element={<AddClassPage/>}></Route>
         </Route>
       </Route>
     )
