@@ -26,7 +26,6 @@ const Layout:React.FC = ()=>{
             </div>
 
             <div className="layout-contents">
-                This is content
                 <Outlet/>
             </div>
         </div>
