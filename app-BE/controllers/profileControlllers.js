@@ -16,7 +16,7 @@ const pool = mysql.createPool({
 });
 
 const profileControllers = {
-    fetchingData:(req,res)=>{
+    verifyUser:(req,res)=>{
         try{
             const token = req.cookies.token;
             const id = req.body.id;
@@ -32,6 +32,9 @@ const profileControllers = {
             res.status(400).send(err)
         }
         
+    },
+    getUserClasses: (req,res)=>{
+        console.log(req.query)
     }
 };
 

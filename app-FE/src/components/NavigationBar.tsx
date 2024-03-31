@@ -20,17 +20,15 @@ const NavigationBar:React.FC = ()=>{
                 <div className="navBar-media">
 
                 </div>
-                <Link className="navBar-link" to={`/profile/?id=${id}`}>Home</Link>
-                <Link className="navBar-link" to={`/profile/addClass/?id=${id}`}>Add Class</Link>
-                <Icon onClick={handleClick} className="navBar-hamburger" icon="ci:hamburger-md" width="2.5rem" height="2.5rem" />
+                <Link className="navBar-link" to={`/profile?id=${id}`}>Home</Link>
+                <Link className="navBar-link" to={`/profile/addClass?id=${id}`}>Add Class</Link>
             </div>
             { openNavBar && <div className="navBar-extended">
-                <Link className="navBar-extended-link" to={`/profile/?id=${id}`}>Home</Link>
-                <Link className="navBar-extended-link" to={`/profile/addClass/?id=${id}`}>Add Class</Link>
+                <Link className="navBar-extended-link" to={`/profile?id=${id}`}>Home</Link>
+                <Link className="navBar-extended-link" to={`/profile/addClass?id=${id}`}>Add Class</Link>
                 
             </div>}
         </div>
-        
     )
 }
 

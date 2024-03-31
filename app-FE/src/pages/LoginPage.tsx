@@ -2,7 +2,7 @@ import '../styles/loginPage.css'
 import { ReactHTMLElement, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link,useParams } from 'react-router-dom';
 import {useCookies} from 'react-cookie'
 
 interface ILoginForm{
@@ -15,6 +15,7 @@ interface ILoginForm{
 const LoginPage:React.FC = ()=>{
     const [cookies, setCookie] = useCookies(['token'])
     const navigate = useNavigate()
+    
 
     const [loginForm,setLoginForm] = useState<ILoginForm>({
         username:'',
@@ -32,7 +33,7 @@ const LoginPage:React.FC = ()=>{
         .then((response)=>{
             const {accessToken,id} = response.data
             setCookie('token',accessToken)
-            navigate(`/profile/?id=${id}`)
+            navigate(`/profile/:id=${id}`)
         })
         .catch(()=>{
            navigate('/')
