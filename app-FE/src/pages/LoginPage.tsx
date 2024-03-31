@@ -33,7 +33,7 @@ const LoginPage:React.FC = ()=>{
         .then((response)=>{
             const {accessToken,id} = response.data
             setCookie('token',accessToken)
-            navigate(`/profile/:id=${id}`)
+            navigate(`/profile/${id}`)
         })
         .catch(()=>{
            navigate('/')

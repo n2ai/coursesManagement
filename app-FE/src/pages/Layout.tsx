@@ -6,11 +6,6 @@ import NavigationBar from "../components/NavigationBar"
 import '../styles/layoutPage.css'
 const Layout:React.FC = ()=>{
 
-    const [searchParams,setSearchParams] = useSearchParams();
-    const id = searchParams.get('id')
-
-    //
-
     return(
         <div className="layout-main">
             <div className="layout-navBar">

@@ -21,7 +21,6 @@ const loginControllers = {
     login:async (req,res)=>{
         try{
             const {username,password} = req.body;
-            console.log(req.body);
             const [row,fields] = await pool.query(`SELECT Password,UserId FROM Users WHERE username = ?`,[username]);
             if(row.length === 0) throw("No user exist");
             

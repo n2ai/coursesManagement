@@ -1,21 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 const HomePage:React.FC = ()=>{
-
-    const [searchParams,setSearchParams] = useSearchParams()
-    const userId = searchParams.get('id')
-
-    //Get data based on userId
+    //Get data based on params id
+    const params = useParams()
+    const navigate = useNavigate()
     useEffect(()=>{
-        axios.get('http://localhost:3000/profile')
+        axios.get(`http://localhost:3000/profile/${params.id}`,{withCredentials:true})
         .then((res)=>{
             console.log(res)
         })
         .catch((err:Error)=>{
-            console.log(err)
+            navigate('/')
         })
-    },[userId])
+    },[])
 
     return(
         <div>

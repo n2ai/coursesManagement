@@ -17,24 +17,32 @@ const pool = mysql.createPool({
 
 const profileControllers = {
     verifyUser:(req,res)=>{
-        try{
-            const token = req.cookies.token;
-            const id = req.body.id;
+        // try{
+        //     const token = req.cookies.token;
+        //     const id = req.body.id;
             
-            const decoded = JWTActions.verifyJWT(token);
+        //     const decoded = JWTActions.verifyJWT(token);
             
-            if(decoded.id === parseInt(id)){
-                res.status(200).send('Verify Success')
-            }else{
-                throw(err)
-            }
-        }catch(err){
-            res.status(400).send(err)
-        }
+        //     if(decoded.id === parseInt(id)){
+        //         res.status(200).send('Verify Success')
+        //     }else{
+        //         throw(err)
+        //     }
+        // }catch(err){
+        //     res.status(400).send(err)
+        // }
+        const token = req.cookies.token;
+        const id = req.params.id;
+        const decoded = JWTActions.verifyJWT(token);
         
-    },
-    getUserClasses: (req,res)=>{
-        console.log(req.query)
+        try{
+            if(decoded.id !== parseInt(id)) throw err;
+        }catch(err){
+            res.status(400).send(err);
+        }
+
+
+
     }
 };
 
