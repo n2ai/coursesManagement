@@ -16,7 +16,7 @@ const pool = mysql.createPool({
 });
 
 const profileControllers = {
-    verifyUser:(req,res)=>{
+    verifyUser: async (req,res)=>{
         // try{
         //     const token = req.cookies.token;
         //     const id = req.body.id;
@@ -35,14 +35,19 @@ const profileControllers = {
         const id = req.params.id;
         const decoded = JWTActions.verifyJWT(token);
         
+        if(decoded.id !== parseInt(id)){
+            res.status(400).send("Cannot write access token");
+        };
+       
         try{
-            if(decoded.id !== parseInt(id)) throw err;
+            const [rows,fields] = await pool.execute(`SELECT * FROM Enrollments WHERE UserId = ?`,[id]);
+            res.status(200).send(rows)
         }catch(err){
-            res.status(400).send(err);
-        }
+            res.status(500).send(err)
+        };
 
-
-
+        
+        
     }
 };
 

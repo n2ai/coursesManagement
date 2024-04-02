@@ -36,7 +36,7 @@ const LoginPage:React.FC = ()=>{
             navigate(`/profile/${id}`)
         })
         .catch(()=>{
-           navigate('/')
+            alert('Cannot login')
         })
     }
 
