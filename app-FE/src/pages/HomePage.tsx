@@ -40,11 +40,13 @@ const HomePage:React.FC = ()=>{
         });
     },[params.id]);
 
-    const tableData = userEnrollments.map((enrollment)=>{
+    const tableData = userEnrollments.map((item:IEnrollments)=>{
         <tr>
-            {enrollment.map((item)=>{
-                //Still fix
-            })}
+            <td>{item.EnrollmentId}</td>
+            <td>{item.UserId}</td>
+            <td>{item.ClassId}</td>
+            <td>{item.ClassCondition}</td>
+            <td>{item.EnrollmentDate}</td>
         </tr>
     })
 
