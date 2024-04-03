@@ -40,7 +40,9 @@ const profileControllers = {
         };
        
         try{
-            const [rows,fields] = await pool.execute(`SELECT * FROM Enrollments WHERE UserId = ?`,[id]);
+            const [rows,fields] = await pool.execute(`SELECT 
+            (SELECT ClassName FROM Classes WHERE ClassId = (SELECT ClassId FROM Enrollments WHERE UserId = ?)) AS ClassName, 
+            ClassId, ClassCondition, EnrollmentDate FROM Enrollments WHERE UserId = ?`,[id,id]);
             res.status(200).send(rows)
         }catch(err){
             res.status(500).send(err)

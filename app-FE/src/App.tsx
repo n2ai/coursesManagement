@@ -18,7 +18,7 @@ function App() {
         <Route path='/register' element={<RegisterPage/>}></Route>
         <Route path='/profile/:id' element={<Layout/>}>
           <Route index element={<HomePage/>}></Route>
-          <Route path='/profile/:id/addClass/' element={<AddClassPage/>}></Route>
+          <Route path='/profile/:id/addClass' element={<AddClassPage/>}></Route>
         </Route>
       </Route>
     )

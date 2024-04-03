@@ -4,8 +4,7 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import '../styles/homePage.css';
 
 interface IEnrollments{
-    EnrollmentId:number,
-    UserId:number,
+    ClassName:string,
     ClassId:string,
     ClassCondition:string,
     EnrollmentDate:string
@@ -32,8 +31,7 @@ const HomePage:React.FC = ()=>{
     }
 
     const [userEnrollments, setUserEnrollments] = useState<IEnrollments[]>([{
-        EnrollmentId:0,
-        UserId:0,
+        ClassName:'',
         ClassId:'',
         ClassCondition:'',
         EnrollmentDate:''
@@ -45,6 +43,7 @@ const HomePage:React.FC = ()=>{
         axios.get(`http://localhost:3000/profile/${params.id}`,{withCredentials:true})
         .then((res:AxiosResponse)=>{
             setUserEnrollments(res.data);
+            console.log(res.data);
             if(res.data.length === 0){
                 setHaveClass(false);
             }else{
@@ -58,8 +57,8 @@ const HomePage:React.FC = ()=>{
 
     const tableData = userEnrollments.map((item:IEnrollments)=>{
         return (<tr key={item.ClassId}>
-            <td>{item.EnrollmentId}</td>
-            <td>{item.UserId}</td>
+            
+            <td>{item.ClassName}</td>
             <td>{item.ClassId}</td>
             <td>{item.ClassCondition}</td>
             <td>{convertDate(item.EnrollmentDate)}</td>
@@ -80,8 +79,7 @@ const HomePage:React.FC = ()=>{
                 {/**Table Session */}
                 <table id="enrollments">
                     <tr>
-                        <th>Enrollment ID</th>
-                        <th>User ID</th>
+                        <th>Class Name</th>
                         <th>Class ID</th>
                         <th>Class Condition</th>
                         <th>Enrollment Date</th>
