@@ -1,6 +1,7 @@
 const mysql = require("mysql2/promise");
 const JWTActions = require("../middlewares/JWTActions");
 
+
 const pool = mysql.createPool({
     host:'localhost',
     user:'root',
@@ -46,10 +47,10 @@ const profileControllers = {
             res.status(200).send(rows)
         }catch(err){
             res.status(500).send(err)
-        };
-
-        
-        
+        };    
+    },
+    fetchClasses: async(req,res)=>{
+       await console.log(req.query)
     }
 };
 

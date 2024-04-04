@@ -8,7 +8,6 @@ const NavigationBar:React.FC = ()=>{
     
     const [openNavBar,setOpenNavBar] = useState<boolean>(false)
     const {id} = useParams()
-    console.log(id)
     const handleClick = ()=>{
         setOpenNavBar(prev=>!prev)
     }    

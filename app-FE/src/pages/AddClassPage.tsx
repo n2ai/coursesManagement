@@ -1,6 +1,7 @@
 import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody} from "@mui/material"
-import { ReactEventHandler, ReactHTML, ReactHTMLElement, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { ReactEventHandler, ReactHTML, ReactHTMLElement, useEffect, useState } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import axios, { AxiosResponse } from "axios";
 
 interface IClass{
     ClassId:string,
@@ -14,7 +15,7 @@ interface IClass{
 const AddClassPage:React.FC = ()=>{
 
     const [searchParams,setSearchParams] = useSearchParams();
-
+    const params = useParams();
     const searchHandler = (event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void=>{
         let search;
         if((event.target as HTMLInputElement).value){
@@ -34,10 +35,12 @@ const AddClassPage:React.FC = ()=>{
         {id:'Credit', name:'Credit'}
     ]
 
+    
+
     const [classes,setClasses] = useState<IClass[]>();
 
     console.log(searchParams.get('keyword'))
-
+    
     return(
         <div>
             <h1>
@@ -45,7 +48,7 @@ const AddClassPage:React.FC = ()=>{
             </h1>
 
             <Paper >
-                <TextField onChange={searchHandler} id="standard-basic" label="Search Class" variant="standard"></TextField>
+                <TextField onChange={searchHandler} value={searchParams.get('keyword')} id="standard-basic" label="Search Class" variant="standard"></TextField>
                 <TableContainer>
                     <Table>
                         <TableHead>
