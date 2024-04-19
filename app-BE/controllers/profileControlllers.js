@@ -16,22 +16,10 @@ const pool = mysql.createPool({
     keepAliveInitialDelay:0
 });
 
+
+
 const profileControllers = {
     verifyUser: async (req,res)=>{
-        // try{
-        //     const token = req.cookies.token;
-        //     const id = req.body.id;
-            
-        //     const decoded = JWTActions.verifyJWT(token);
-            
-        //     if(decoded.id === parseInt(id)){
-        //         res.status(200).send('Verify Success')
-        //     }else{
-        //         throw(err)
-        //     }
-        // }catch(err){
-        //     res.status(400).send(err)
-        // }
         const token = req.cookies.token;
         const id = req.params.id;
         const decoded = JWTActions.verifyJWT(token);
@@ -49,8 +37,20 @@ const profileControllers = {
             res.status(500).send(err)
         };    
     },
-    fetchClasses: async(req,res)=>{
-       await console.log(req.query)
+    fetchClasses: async (req,res)=>{
+
+        let id = req.params.id
+        try{
+            //query class that student is attend
+            const [classesTakenQueried] = await pool.execute(`SELECT ClassId FROM Enrollments WHERE UserId = ?`,[id]);
+            const classTaken = classesTakenQueried.map(item=>item.ClassId)
+            const [classCatalouge] =  await pool.execute(`SELECT ClassId, ClassName, Instructor, Room, Credit FROM Classes WHERE ClassId NOT IN (?)`,[classTaken])
+        
+            res.status(200).send(classCatalouge)
+            
+        }catch(err){
+            res.status(500).send(err)
+        };
     }
 };
 

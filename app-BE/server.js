@@ -1,4 +1,5 @@
 const cors = require('cors');
+const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -13,6 +14,9 @@ const corsOptions = {
     credentials:true,
     methods:['GET','POST','PUT','DELETE','OPTIONS'],
 };
+const server = http.createServer(app);
+server.maxConnections = 100;
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(bodyParser.json());

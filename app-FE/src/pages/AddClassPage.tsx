@@ -13,19 +13,18 @@ interface IClass{
 
 
 const AddClassPage:React.FC = ()=>{
+    const {id} = useParams();
+    const endPointUrl = `http://localhost:3000/profile/${id}/addClass`;
+    
 
-    const [searchParams,setSearchParams] = useSearchParams();
-    const params = useParams();
-    const searchHandler = (event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void=>{
-        let search;
-        if((event.target as HTMLInputElement).value){
-            search = {keyword:(event.target as HTMLInputElement).value};
-        }else{
-            search = undefined;
-        }
-
-        setSearchParams(search,{replace:true});
-    }   
+    useEffect(()=>{
+        axios.get(endPointUrl,{withCredentials:true}).
+        then(res=>{
+            console.log(res.data)
+        })
+    })
+    
+    
 
     const columns = [
         {id:'Class Id',name:'Class Id'},
@@ -36,11 +35,6 @@ const AddClassPage:React.FC = ()=>{
     ]
 
     
-
-    const [classes,setClasses] = useState<IClass[]>();
-
-    console.log(searchParams.get('keyword'))
-    
     return(
         <div>
             <h1>
@@ -48,14 +42,14 @@ const AddClassPage:React.FC = ()=>{
             </h1>
 
             <Paper >
-                <TextField onChange={searchHandler} value={searchParams.get('keyword')} id="standard-basic" label="Search Class" variant="standard"></TextField>
+                <TextField  id="standard-basic" label="Search Class" variant="standard"></TextField>
                 <TableContainer>
                     <Table>
                         <TableHead>
                             <TableRow>
                                 {columns.map((item)=>{
                                     return (
-                                    <TableCell id={item.id}>
+                                    <TableCell key={item.id}>
                                         {item.name}
                                     </TableCell>
                                     )
