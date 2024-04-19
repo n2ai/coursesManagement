@@ -1,4 +1,4 @@
-import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody} from "@mui/material"
+import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody, TablePagination} from "@mui/material"
 import { ReactEventHandler, ReactHTML, ReactHTMLElement, useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
@@ -11,16 +11,38 @@ interface IClass{
     Credit:number
 }
 
-
 const AddClassPage:React.FC = ()=>{
+    const [rows, rowChange] = useState([]);
+    const [page, pageChange] = useState(0);
+    const [rowPerPage, rowPerPageChange] = useState(5);
+
+    const handleChangePage = (event,newPage)=>{
+        pageChange(newPage)
+    }
+
+    const handleRowsPerPage = (event)=>{
+        rowPerPageChange(+event.target.value);
+        pageChange(0);
+    }
+
     const {id} = useParams();
     const endPointUrl = `http://localhost:3000/profile/${id}/addClass`;
-    
+    const [initialCatalouge,setInitialCatalouge] = useState<IClass[]>([{
+        ClassId:'',
+        ClassName:'',
+        Instructor:'',
+        Room:'',
+        Credit:0
+    }])
+
+    const catalogue = initialCatalouge;
 
     useEffect(()=>{
         axios.get(endPointUrl,{withCredentials:true}).
         then(res=>{
+            //test to see data
             console.log(res.data)
+            setInitialCatalouge(res.data)
         })
     })
     
@@ -44,7 +66,7 @@ const AddClassPage:React.FC = ()=>{
             <Paper >
                 <TextField  id="standard-basic" label="Search Class" variant="standard"></TextField>
                 <TableContainer>
-                    <Table>
+                    <Table stickyHeader>
                         <TableHead>
                             <TableRow>
                                 {columns.map((item)=>{
@@ -57,10 +79,28 @@ const AddClassPage:React.FC = ()=>{
                             </TableRow>
                         </TableHead>
                         <TableBody>
-
+                            {catalogue && catalogue.map((item, index)=>{
+                                return (<TableRow key={index}>
+                                    <TableCell>{item.ClassId}</TableCell>
+                                    <TableCell>{item.ClassName}</TableCell>
+                                    <TableCell>{item.Instructor}</TableCell>
+                                    <TableCell>{item.Room}</TableCell>
+                                    <TableCell>{item.Credit}</TableCell>
+                                </TableRow>)
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <TablePagination 
+                rowsPerPageOptions={[5,10,25]}
+                page={page}
+                rowsPerPage={rowPerPage}
+                component="div"
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleRowsPerPage}
+                >
+
+                </TablePagination>
             </Paper>
         </div>
     )
