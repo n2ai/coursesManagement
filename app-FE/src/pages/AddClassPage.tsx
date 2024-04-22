@@ -12,18 +12,18 @@ interface IClass{
 }
 
 const AddClassPage:React.FC = ()=>{
-    const [rows, rowChange] = useState([]);
-    const [page, pageChange] = useState(0);
-    const [rowPerPage, rowPerPageChange] = useState(5);
+    // const [rows, rowChange] = useState([]);
+    // const [page, pageChange] = useState(0);
+    // const [rowPerPage, rowPerPageChange] = useState(5);
 
-    const handleChangePage = (event,newPage)=>{
-        pageChange(newPage)
-    }
+    // const handleChangePage = (event,newPage)=>{
+    //     pageChange(newPage)
+    // }
 
-    const handleRowsPerPage = (event)=>{
-        rowPerPageChange(+event.target.value);
-        pageChange(0);
-    }
+    // const handleRowsPerPage = (event)=>{
+    //     rowPerPageChange(+event.target.value);
+    //     pageChange(0);
+    // }
 
     const {id} = useParams();
     const endPointUrl = `http://localhost:3000/profile/${id}/addClass`;
@@ -35,19 +35,25 @@ const AddClassPage:React.FC = ()=>{
         Credit:0
     }])
 
-    const catalogue = initialCatalouge;
+    const [catalogue,setCatalouge] = useState<Iclass[]>([{
+        ClassId:'',
+        ClassName:'',
+        Instructor:'',
+        Room:'',
+        Credit:0
+    }])
 
+
+    //Get data from the backend
     useEffect(()=>{
         axios.get(endPointUrl,{withCredentials:true}).
         then(res=>{
-            //test to see data
-            console.log(res.data)
             setInitialCatalouge(res.data)
+            setCatalouge(res.data)
         })
-    })
+    },[endPointUrl])
     
     
-
     const columns = [
         {id:'Class Id',name:'Class Id'},
         {id:'Class Name', name:'Class Name'},
@@ -55,6 +61,28 @@ const AddClassPage:React.FC = ()=>{
         {id:'Room', name:'Room'},
         {id:'Credit', name:'Credit'}
     ]
+
+    //Handle Searchbar Filter 
+    const handleFilter = (event:React.ChangeEvent<HTMLInputElement>)=>{
+        const value = event.target.value;
+
+        //test value
+        console.log(value);
+        // setInitialCatalouge((prev)=>{
+        //     return(
+        //         prev.filter((item)=>{
+        //             if(item.ClassId.includes(value) || item.ClassName.includes(value) || 
+        //             item.Instructor.includes(value) || item.Room.includes(value)) return true
+        //         })
+        //     )
+        // })
+        setCatalouge(initialCatalouge.filter((item)=>{
+            if(item.ClassId.includes(value) || item.ClassName.includes(value) || 
+            item.Instructor.includes(value) || item.Room.includes(value)) return true
+        }))
+        console.log(catalogue);
+    }
+
 
     
     return(
@@ -64,7 +92,11 @@ const AddClassPage:React.FC = ()=>{
             </h1>
 
             <Paper >
-                <TextField  id="standard-basic" label="Search Class" variant="standard"></TextField>
+                {/**Search Bar*/}
+                <TextField onChange={handleFilter}  id="standard-basic" label="Search Class" variant="standard">
+                </TextField>
+
+                {/**Main Table */}
                 <TableContainer>
                     <Table stickyHeader>
                         <TableHead>
@@ -91,7 +123,7 @@ const AddClassPage:React.FC = ()=>{
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <TablePagination 
+                {/* <TablePagination 
                 rowsPerPageOptions={[5,10,25]}
                 page={page}
                 rowsPerPage={rowPerPage}
@@ -100,7 +132,7 @@ const AddClassPage:React.FC = ()=>{
                 onRowsPerPageChange={handleRowsPerPage}
                 >
 
-                </TablePagination>
+                </TablePagination> */}
             </Paper>
         </div>
     )
