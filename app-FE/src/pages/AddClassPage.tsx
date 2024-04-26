@@ -1,4 +1,4 @@
-import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody, TablePagination} from "@mui/material"
+import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody, TablePagination, TableFooter} from "@mui/material"
 import { ReactEventHandler, ReactHTML, ReactHTMLElement, useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
@@ -11,19 +11,26 @@ interface IClass{
     Credit:number
 }
 
+
 const AddClassPage:React.FC = ()=>{
-    // const [rows, rowChange] = useState([]);
-    // const [page, pageChange] = useState(0);
-    // const [rowPerPage, rowPerPageChange] = useState(5);
+    
+    const [page, setPage] = useState(2);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    // const handleChangePage = (event,newPage)=>{
-    //     pageChange(newPage)
-    // }
 
-    // const handleRowsPerPage = (event)=>{
-    //     rowPerPageChange(+event.target.value);
-    //     pageChange(0);
-    // }
+    const handleChangePage = (
+        event: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+      ) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+        ) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     const {id} = useParams();
     const endPointUrl = `http://localhost:3000/profile/${id}/addClass`;
@@ -35,7 +42,7 @@ const AddClassPage:React.FC = ()=>{
         Credit:0
     }])
 
-    const [catalogue,setCatalouge] = useState<Iclass[]>([{
+    const [catalogue,setCatalouge] = useState<IClass[]>([{
         ClassId:'',
         ClassName:'',
         Instructor:'',
@@ -53,7 +60,7 @@ const AddClassPage:React.FC = ()=>{
         })
     },[endPointUrl])
     
-    
+    //Specify columns for table
     const columns = [
         {id:'Class Id',name:'Class Id'},
         {id:'Class Name', name:'Class Name'},
@@ -64,18 +71,7 @@ const AddClassPage:React.FC = ()=>{
 
     //Handle Searchbar Filter 
     const handleFilter = (event:React.ChangeEvent<HTMLInputElement>)=>{
-        const value = event.target.value;
-
-        //test value
-        console.log(value);
-        // setInitialCatalouge((prev)=>{
-        //     return(
-        //         prev.filter((item)=>{
-        //             if(item.ClassId.includes(value) || item.ClassName.includes(value) || 
-        //             item.Instructor.includes(value) || item.Room.includes(value)) return true
-        //         })
-        //     )
-        // })
+        const value = event.target.value;        
         setCatalouge(initialCatalouge.filter((item)=>{
             if(item.ClassId.includes(value) || item.ClassName.includes(value) || 
             item.Instructor.includes(value) || item.Room.includes(value)) return true
@@ -83,6 +79,7 @@ const AddClassPage:React.FC = ()=>{
         console.log(catalogue);
     }
 
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - catalogue.length) : 0;
 
     
     return(
@@ -111,7 +108,10 @@ const AddClassPage:React.FC = ()=>{
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {catalogue && catalogue.map((item, index)=>{
+                            {(rowsPerPage > 0
+                                ? catalogue.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                : catalogue
+                                ).map((item, index)=>{
                                 return (<TableRow key={index}>
                                     <TableCell>{item.ClassId}</TableCell>
                                     <TableCell>{item.ClassName}</TableCell>
@@ -121,18 +121,19 @@ const AddClassPage:React.FC = ()=>{
                                 </TableRow>)
                             })}
                         </TableBody>
+                        <TableFooter>
+                            <TablePagination
+                                component="div"
+                                count={100}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                rowsPerPage={rowsPerPage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                            />
+                        </TableFooter>
                     </Table>
                 </TableContainer>
-                {/* <TablePagination 
-                rowsPerPageOptions={[5,10,25]}
-                page={page}
-                rowsPerPage={rowPerPage}
-                component="div"
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleRowsPerPage}
-                >
-
-                </TablePagination> */}
+                
             </Paper>
         </div>
     )
