@@ -1,7 +1,13 @@
-import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody, TablePagination, TableFooter} from "@mui/material"
-import { ReactEventHandler, ReactHTML, ReactHTMLElement, useEffect, useState } from "react";
+import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody, TablePagination} from "@mui/material"
+import { Dropdown } from '@mui/base/Dropdown';
+import { MenuButton } from '@mui/base/MenuButton';
+import { Menu } from '@mui/base/Menu';
+import { MenuItem } from '@mui/base/MenuItem';
+import { useEffect, useState } from "react";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useParams, useSearchParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
+import '../styles/addClassPage.css';
 
 interface IClass{
     ClassId:string,
@@ -11,6 +17,22 @@ interface IClass{
     Credit:number
 }
 
+const ShoppingCart = ()=>{
+    return (
+        <Dropdown>
+          <MenuButton>
+            <ShoppingCartIcon/>
+          </MenuButton>
+          <Menu>
+            <MenuItem>
+                <div className="shoppingCart_item">
+                    item
+                </div>
+            </MenuItem>
+          </Menu>
+        </Dropdown>
+      );
+}
 
 const AddClassPage:React.FC = ()=>{
     
@@ -99,10 +121,12 @@ const AddClassPage:React.FC = ()=>{
     
     return(
         <div>
+            
             <h1>
                 Class Catalouge
             </h1>
             
+            <ShoppingCart/>
             <Paper >
                 {/**Search Bar*/}
                 <TextField onChange={handleFilter}  id="standard-basic" label="Search Class" variant="standard">
@@ -150,6 +174,7 @@ const AddClassPage:React.FC = ()=>{
                 </TableContainer>
                 
             </Paper>
+            
         </div>
     )
 };
