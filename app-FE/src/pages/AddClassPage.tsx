@@ -16,7 +16,21 @@ const AddClassPage:React.FC = ()=>{
     
     const [page, setPage] = useState(2);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [shoppingCart, setShoppingCart] = useState<string[]>([]);
 
+
+    const handleAddToCart = (item:string):void=>{
+        if(shoppingCart.length !== 5){
+            if(!shoppingCart.includes(item)){
+                setShoppingCart((prev)=>{
+                    return[item, ...prev]
+                })
+            }
+        }else{
+            alert('Maximum number of items is 5')
+        }
+        
+    }
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -79,15 +93,16 @@ const AddClassPage:React.FC = ()=>{
         console.log(catalogue);
     }
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - catalogue.length) : 0;
+    // const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - catalogue.length) : 0;
 
+    console.log(shoppingCart)
     
     return(
         <div>
             <h1>
                 Class Catalouge
             </h1>
-
+            
             <Paper >
                 {/**Search Bar*/}
                 <TextField onChange={handleFilter}  id="standard-basic" label="Search Class" variant="standard">
@@ -112,7 +127,7 @@ const AddClassPage:React.FC = ()=>{
                                 ? catalogue.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : catalogue
                                 ).map((item, index)=>{
-                                return (<TableRow key={index}>
+                                return (<TableRow onClick={()=>handleAddToCart(item.ClassId)} style={{'cursor':'pointer'}} key={index}>
                                     <TableCell>{item.ClassId}</TableCell>
                                     <TableCell>{item.ClassName}</TableCell>
                                     <TableCell>{item.Instructor}</TableCell>
@@ -120,17 +135,17 @@ const AddClassPage:React.FC = ()=>{
                                     <TableCell>{item.Credit}</TableCell>
                                 </TableRow>)
                             })}
+                            <TableRow>
+                                <TablePagination
+                                        count={100}
+                                        page={page}
+                                        onPageChange={handleChangePage}
+                                        rowsPerPage={rowsPerPage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                    />
+                            </TableRow>
+
                         </TableBody>
-                        <TableFooter>
-                            <TablePagination
-                                component="div"
-                                count={100}
-                                page={page}
-                                onPageChange={handleChangePage}
-                                rowsPerPage={rowsPerPage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                            />
-                        </TableFooter>
                     </Table>
                 </TableContainer>
                 
