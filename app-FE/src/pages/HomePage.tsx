@@ -1,6 +1,6 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import '../styles/homePage.css';
 
 interface IEnrollments{

@@ -2,11 +2,10 @@ import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell,
 import { Dropdown } from '@mui/base/Dropdown';
 import { MenuButton } from '@mui/base/MenuButton';
 import { Menu } from '@mui/base/Menu';
-import { MenuItem } from '@mui/base/MenuItem';
 import { useEffect, useState } from "react";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useParams, useSearchParams } from "react-router-dom";
-import axios, { AxiosResponse } from "axios";
+import { useParams} from "react-router-dom";
+import axios from "axios";
 import '../styles/addClassPage.css';
 
 interface IClass{
@@ -17,7 +16,23 @@ interface IClass{
     Credit:number
 }
 
-const ShoppingCart = ()=>{
+interface ICart{
+    cart:string[]
+}
+
+const ShoppingCart:React.FC<ICart> = ({cart})=>{
+
+    const params = useParams();
+    console.log(params)
+    const handleEnrollment = (event:React.MouseEvent<HTMLButtonElement>)=>{
+        event.preventDefault();
+        if(cart.length !== 0){
+            axios.post(`http://localhost:3000/profile/${params.id}/addClass`,cart);
+        }else{
+            alert('The cart is empty')
+        }
+    }
+
     return (
         <Dropdown>
           <MenuButton>
@@ -25,17 +40,15 @@ const ShoppingCart = ()=>{
           </MenuButton>
           <Menu>
             <MenuList className="shoppingCart_item" >
+                {cart.map((item)=>{
+                    return <ListItem>
+                        {item}
+                    </ListItem>
+                })}
                 <ListItem>
-                    item
-                </ListItem>
-                <ListItem>
-                    item
-                </ListItem>
-                <ListItem>
-                    item
-                </ListItem>
-                <ListItem>
-                    item
+                  <button onClick={(event)=>handleEnrollment(event)}>
+                    {"Enroll"}
+                  </button>
                 </ListItem>
             </MenuList>
           </Menu>
@@ -64,7 +77,6 @@ const AddClassPage:React.FC = ()=>{
     }
 
     const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
       ) => {
         setPage(newPage);
@@ -121,12 +133,9 @@ const AddClassPage:React.FC = ()=>{
             if(item.ClassId.includes(value) || item.ClassName.includes(value) || 
             item.Instructor.includes(value) || item.Room.includes(value)) return true
         }))
-        console.log(catalogue);
     }
 
     // const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - catalogue.length) : 0;
-
-    console.log(shoppingCart)
     
     return(
         <div>
@@ -135,7 +144,7 @@ const AddClassPage:React.FC = ()=>{
                 Class Catalog
             </h1>
             
-            <ShoppingCart/>
+            <ShoppingCart cart={shoppingCart} />
             <Paper >
                 {/**Search Bar*/}
                 <TextField onChange={handleFilter}  id="standard-basic" label="Search Class" variant="standard">
