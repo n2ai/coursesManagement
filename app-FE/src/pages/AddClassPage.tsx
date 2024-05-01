@@ -1,4 +1,4 @@
-import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody, TablePagination} from "@mui/material"
+import {Paper, TextField, Table, TableHead, TableRow, TableContainer, TableCell, TableBody, TablePagination, MenuList, ListItem} from "@mui/material"
 import { Dropdown } from '@mui/base/Dropdown';
 import { MenuButton } from '@mui/base/MenuButton';
 import { Menu } from '@mui/base/Menu';
@@ -24,19 +24,28 @@ const ShoppingCart = ()=>{
             <ShoppingCartIcon/>
           </MenuButton>
           <Menu>
-            <MenuItem>
-                <div className="shoppingCart_item">
+            <MenuList className="shoppingCart_item" >
+                <ListItem>
                     item
-                </div>
-            </MenuItem>
+                </ListItem>
+                <ListItem>
+                    item
+                </ListItem>
+                <ListItem>
+                    item
+                </ListItem>
+                <ListItem>
+                    item
+                </ListItem>
+            </MenuList>
           </Menu>
         </Dropdown>
-      );
+    );
 }
 
 const AddClassPage:React.FC = ()=>{
     
-    const [page, setPage] = useState(2);
+    const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [shoppingCart, setShoppingCart] = useState<string[]>([]);
 
@@ -123,7 +132,7 @@ const AddClassPage:React.FC = ()=>{
         <div>
             
             <h1>
-                Class Catalouge
+                Class Catalog
             </h1>
             
             <ShoppingCart/>
@@ -134,7 +143,7 @@ const AddClassPage:React.FC = ()=>{
 
                 {/**Main Table */}
                 <TableContainer>
-                    <Table stickyHeader>
+                    <Table>
                         <TableHead>
                             <TableRow>
                                 {columns.map((item)=>{
